@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Expandaa PDF 🐱‍👓</title>
+  <link rel="icon" href="cat.png" />
   <link rel="stylesheet" href="style.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
@@ -12,44 +13,27 @@
 
 <body>
   <div class="container text-center">
-    <h1>Welcome to <span>ASA PDF </span>🐱‍👓</h1>
-    <div><a href="#" type="button" class="btnn" <button type="button" class="btn btn-primary" data-toggle="modal"
-        data-target="#myModal">Get PDF</a></div>
+    <h1>Welcome to <span>ASA PDF </span><img src="cat.png" alt=""></h1>
+    <div>
+      <a href="#" type="button" class="btnn" data-toggle="modal" data-target="#myModal">Get PDF</a>
+    </div>
   </div>
+
+  <!-- Modal -->
   <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">ابحث عن الملخصات</h5><button type="button" class="close" id="closeModal"
-            data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;
+          <h5 class="modal-title">ابحث عن الملخصات</h5>
 
-            </span></button>
+          </button>
         </div>
         <div class="modal-body">
-          <p>جميع الملخصات تجدها هنا فقط ابحث عن المادة</p><input type="text" id="searchInput" class="form-control"
-            placeholder="اكتب كلمة للبحث">
+          <p>جميع الملخصات تجدها هنا فقط ابحث عن المادة</p>
+          <input type="text" id="searchInput" class="form-control" placeholder="اكتب كلمة للبحث">
           <div id="searchResults" class="search-result mt-3"></div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="stars"></div>
-  <div class="loader">
-    <div class="circle">
-      <div class="dot"></div>
-      <div class="outline"></div>
-    </div>
-    <div class="circle">
-      <div class="dot"></div>
-      <div class="outline"></div>
-    </div>
-    <div class="circle">
-      <div class="dot"></div>
-      <div class="outline"></div>
-    </div>
-    <div class="circle">
-      <div class="dot"></div>
-      <div class="outline"></div>
     </div>
   </div>
 
@@ -90,25 +74,25 @@
             results.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
             results.forEach(file => {
               const resultItem = document.createElement('div');
-              resultItem.classList.add('card');
+              resultItem.classList.add('card', 'mb-3');
 
               resultItem.innerHTML = `
-                <div class="card-body">
-                  <div>
-                    <h5 class="card-title">${file.subject}</h5>
-                    <p class="card-text"><small class="text-muted">Added on ${file.releaseDate}</small></p>
-                  </div>
-                  <div>
-                    <a href="${file.url}" class="btn btn-primary" download>Download</a>
-                  </div>
-                </div>`;
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">${file.subject}</h5>
+                                        <p class="card-text"><small class="text-muted">تاريخ الإصدار: ${file.releaseDate}</small></p>
+                                    </div>
+                                    <div>
+                                        <a href="${file.url}" class="btn btn-primary" download="${file.filename}">تنزيل</a>
+                                    </div>
+                                </div>`;
               resultsContainer.appendChild(resultItem);
             });
           }
         })
         .catch(error => {
           console.error('Error:', error);
-          document.getElementById('searchResults').innerText = 'حدث خطأ أثناء البحث. برجاء المحاولة مرة أخرى.';
+          document.getElementById('searchResults').innerHTML = '<p class="text-danger">حدث خطأ أثناء البحث. برجاء المحاولة مرة أخرى.</p>';
         });
     });
   </script>
